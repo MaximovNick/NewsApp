@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  NewsApp
 //
 //  Created by Nikolai Maksimov on 22.07.2022.
@@ -8,11 +8,10 @@
 import UIKit
 import SafariServices
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController {
     
     private var viewModels = [NewsTableViewCellViewModel]()
     private var articles = [Article]()
-
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -21,8 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return table
     }()
     
-    
-
+// MARK: - Override Func
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +30,53 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         view.backgroundColor = .systemBackground
         
-        APICaller.shared.getTopStories { [weak self] result in
+        fetchData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: NewsTableViewCell.identifier,
+            for: indexPath
+        ) as? NewsTableViewCell else {
+            fatalError()
+        }
+        cell.configure(with: viewModels[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let article = articles[indexPath.row]
+        
+        guard let url = URL(string: article.url ?? "") else { return }
+        
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        150
+    }
+}
+
+// MARK: - Fetch Data
+extension MainViewController {
+    
+    private func fetchData() {
+        NetworkManager.shared.fetchData { [weak self] result in
             switch result {
             case .success(let articles):
                 self?.articles = articles
@@ -52,42 +96,4 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-    }
-    
-    // TableView
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModels.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: NewsTableViewCell.identifier,
-            for: indexPath
-        ) as? NewsTableViewCell else {
-            fatalError()
-        }
-        cell.configure(with: viewModels[indexPath.row])
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let article = articles[indexPath.row]
-        
-        guard let url = URL(string: article.url ?? "") else { return }
-        
-        let vc = SFSafariViewController(url: url)
-        present(vc, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
-    }
 }
-
