@@ -19,7 +19,7 @@ final class APICaller {
     func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void) {
         guard let url = Contacts.topHeadLineURL else { return }
         
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+        let _ = URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
             }

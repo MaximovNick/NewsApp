@@ -110,7 +110,7 @@ static let identifier = "NewsTableViewCell"
                 }
                 viewModel.imageData = data
                 DispatchQueue.main.async {
-                    self?.imageView?.image = UIImage(data: data)
+                    self?.newsImageView.image = UIImage(data: data)
                 }
             }.resume()
         }

@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private let tableView: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.identifier)
+        table.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.identifier)
         
         return table
     }()
