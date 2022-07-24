@@ -8,7 +8,7 @@
 import UIKit
 import SafariServices
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UISearchBarDelegate {
     
     private var viewModels = [NewsTableViewCellViewModel]()
     private var articles = [Article]()
@@ -19,6 +19,8 @@ class MainViewController: UIViewController {
         
         return table
     }()
+    
+    private let searchVC = UISearchController(searchResultsController: nil)
     
 // MARK: - Override Func
     override func viewDidLoad() {
@@ -31,11 +33,42 @@ class MainViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         fetchData()
+        createSearchBar()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+    }
+    
+    private func createSearchBar() {
+        navigationItem.searchController = searchVC
+        searchVC.searchBar.delegate = self
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text, !text.isEmpty else { return }
+        
+        NetworkManager.shared.search(with: text) { [weak self] result in
+            switch result {
+            case .success(let articles):
+                self?.articles = articles
+                self?.viewModels = articles.compactMap({
+                    NewsTableViewCellViewModel(
+                        title: $0.title,
+                        subTitle: $0.description ?? "No description",
+                        imageURL: URL(string: $0.urlToImage ?? "")
+                    )
+                })
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.searchVC.dismiss(animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
@@ -70,6 +103,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
     }
+    
+
 }
 
 // MARK: - Fetch Data
