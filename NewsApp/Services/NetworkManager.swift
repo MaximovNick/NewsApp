@@ -12,7 +12,7 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-   private let url = "https://newsapi.org/v2/top-headlines?country=US&apiKey=eda6154a62744b7bbad849130a7f7b6f"
+    private let url = "https://newsapi.org/v2/top-headlines?country=US&apiKey=eda6154a62744b7bbad849130a7f7b6f"
     private let searchUrlString = "https://newsapi.org/v2/everything?sortedBy=popularity&apiKey=eda6154a62744b7bbad849130a7f7b6f&q="
     
     func fetchData(completion: @escaping (Result<[Article], Error>) -> Void) {

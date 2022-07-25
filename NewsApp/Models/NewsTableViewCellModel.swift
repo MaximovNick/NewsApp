@@ -8,13 +8,13 @@
 import Foundation
 
 class NewsTableViewCellViewModel {
-    let title: String
+    let cellTitle: String
     let subTitle: String
     let imageURL: URL?
     var imageData: Data? = nil
     
     init(title: String, subTitle: String, imageURL: URL?) {
-        self.title = title
+        self.cellTitle = title
         self.subTitle = subTitle
         self.imageURL = imageURL
     }

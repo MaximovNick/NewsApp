@@ -14,14 +14,14 @@ static let identifier = "NewsTableViewCell"
     private let newsTitleLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 22, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
     
     private let subTitleLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         return label
     }()
     
@@ -37,7 +37,7 @@ static let identifier = "NewsTableViewCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(newsImageView)
+        contentView.addSubview(newsTitleLabel)
         contentView.addSubview(subTitleLabel)
         contentView.addSubview(newsImageView)
     }
@@ -79,7 +79,7 @@ static let identifier = "NewsTableViewCell"
     }
     
     func configure(with viewModel: NewsTableViewCellViewModel) {
-        newsTitleLabel.text = viewModel.title
+        newsTitleLabel.text = viewModel.cellTitle
         subTitleLabel.text = viewModel.subTitle
         
         //Image
