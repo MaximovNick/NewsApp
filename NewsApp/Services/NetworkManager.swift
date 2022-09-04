@@ -18,7 +18,7 @@ final class NetworkManager {
     func fetchData(completion: @escaping (Result<[Article], Error>) -> Void) {
         guard let url = URL(string: url) else { return }
         
-        let _ = URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
             }
@@ -39,7 +39,7 @@ final class NetworkManager {
         let urlString = searchUrlString + query
         guard let url = URL(string: urlString) else { return }
         
-        let _ = URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
             }

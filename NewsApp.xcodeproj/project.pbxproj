@@ -95,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				ADEFAD53288C311400CB98C9 /* News.swift */,
-				ADEFAD55288C3D8300CB98C9 /* NewsTableViewCellModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,6 +110,7 @@
 		ADEFAD51288C2D4C00CB98C9 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				ADEFAD55288C3D8300CB98C9 /* NewsTableViewCellModel.swift */,
 				AD1E8CA3288B06E500B4A166 /* NewsTableViewCell.swift */,
 			);
 			path = CustomCell;

@@ -8,25 +8,25 @@
 import UIKit
 
 class NewsTableViewCell: UITableViewCell {
-
-static let identifier = "NewsTableViewCell"
+    
+    static let identifier = "NewsTableViewCell"
     
     private let newsTitleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
     
     private let subTitleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 12, weight: .regular)
         return label
     }()
     
     private let newsImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true

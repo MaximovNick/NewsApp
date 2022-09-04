@@ -10,8 +10,8 @@ import SafariServices
 
 class MainViewController: UIViewController, UISearchBarDelegate {
     
-    private var viewModels = [NewsTableViewCellViewModel]()
-    private var articles = [Article]()
+    private var viewModels: [NewsTableViewCellViewModel] = []
+    private var articles: [Article] = []
     
     private let tableView: UITableView = {
         let table = UITableView()
